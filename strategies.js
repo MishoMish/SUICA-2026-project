@@ -76,6 +76,13 @@ function deselectPiece() {
   clearHighlights();
 }
 
+function scrollToDisplayArea() {
+  var canvas = document.getElementById("suicaCanvas");
+  if (canvas && canvas.scrollIntoView) {
+    canvas.scrollIntoView({ behavior: "smooth", block: "center" });
+  }
+}
+
 function playAutoplaySequence(moves, index) {
   if (!isAutoplayActive || index >= moves.length) {
     isAutoplayActive = false;
@@ -112,6 +119,7 @@ function playStrategy1() {
   resetDemo();
   isAutoplayActive = true;
   updateInfo("Стратегия 1: Контрол на центъра");
+  scrollToDisplayArea();
 
   var moves = [
     {
@@ -169,46 +177,47 @@ function playStrategy2() {
   resetDemo();
   isAutoplayActive = true;
   updateInfo("Стратегия 2: Жертва за позиция");
+  scrollToDisplayArea();
 
   var moves = [
     {
       fromRow: 5,
-      fromCol: 0,
+      fromCol: 2,
       toRow: 4,
-      toCol: 1,
+      toCol: 3,
       description: "Бял пул се премества напред",
     },
     {
       fromRow: 2,
       fromCol: 3,
       toRow: 3,
-      toCol: 2,
+      toCol: 4,
       description: "Черен пул атакува",
     },
     {
       fromRow: 5,
-      fromCol: 2,
+      fromCol: 4,
       toRow: 4,
-      toCol: 3,
-      description: "Белите жертват позиция",
+      toCol: 5,
+      description: "Белите позиционират друг пул",
     },
     {
       fromRow: 3,
-      fromCol: 2,
+      fromCol: 4,
       toRow: 5,
-      toCol: 0,
+      toCol: 2,
       isJump: true,
       capturedRow: 4,
-      capturedCol: 1,
+      capturedCol: 3,
       description: "Черните взимат примамката",
     },
     {
-      fromRow: 4,
-      fromCol: 3,
-      toRow: 2,
-      toCol: 1,
+      fromRow: 6,
+      fromCol: 1,
+      toRow: 4,
+      toCol: 3,
       isJump: true,
-      capturedRow: 3,
+      capturedRow: 5,
       capturedCol: 2,
       description: "Белите печелят по-добра позиция!",
     },
@@ -262,6 +271,7 @@ function playStrategy3() {
 
   isAutoplayActive = true;
   updateInfo("Стратегия 3: Верижно взимане - подготовка...");
+  scrollToDisplayArea();
 
   // Специална настройка за демонстрация
   setupChainCapture();
@@ -314,6 +324,7 @@ function playStrategy4() {
   resetDemo();
   isAutoplayActive = true;
   updateInfo("Стратегия 4: Защита на краищата");
+  scrollToDisplayArea();
 
   var moves = [
     {
@@ -395,6 +406,7 @@ function playStrategy5() {
 
   isAutoplayActive = true;
   updateInfo("Стратегия 5: Създаване на дама");
+  scrollToDisplayArea();
 
   setupKingCreation();
 

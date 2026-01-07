@@ -70,6 +70,17 @@ strong {
   color: #5d3a1a;
 }
 
+/* Акцентна кутия за важни линкове */
+.callout {
+  margin: 1.5em 0;
+  padding: 1em 1.25em;
+  background: linear-gradient(135deg, #fff4d8, #f0e0c0);
+  border: 2px solid #c28a3a;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(139, 90, 43, 0.25);
+  text-align: center;
+}
+
 /* Секции */
 .section {
   margin: 2em 0;
