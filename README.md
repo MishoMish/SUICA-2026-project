@@ -81,7 +81,7 @@ MyProject/
 ## 🔗 Връзки
 
 - 📦 [GitHub Repository](https://github.com/MishoMish/SUICA-2026-project)
-- 📚 [SUICA Documentation](https://suica.js.org/)
+- 📚 [SUICA Documentation](https://boytchev.github.io/suica/)
 - 🏫 [ФМИ - СУ](https://www.fmi.uni-sofia.bg/)
 
 ---
