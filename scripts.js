@@ -47,10 +47,46 @@ var coordinateLabels = [];
 // ИНИЦИАЛИЗАЦИЯ НА SUICA
 // =========================================================
 
-// Камера
-background("#2d3436");
+// Камера - фон съответстващ на CSS темата
+background("#0f0f1a");
 perspective(40);
 lookAt([0, 275, 250], [0, 0, 0], [0, 0, -1]);
+
+// =========================================================
+// ЗВУКОВИ ЕФЕКТИ
+// =========================================================
+
+var moveSound = new Audio("sounds/place.mp3");
+var captureSound = new Audio("sounds/capture.wav"); // Credits to Pavel Boytchev (https://github.com/boytchev)
+var victorySound = new Audio("sounds/victory.mp3");
+
+moveSound.volume = 0.3;
+captureSound.volume = 0.5;
+victorySound.volume = 0.5;
+
+/**
+ * Възпроизвежда звук при движение на пул
+ */
+function playMoveSound() {
+  moveSound.currentTime = 0;
+  moveSound.play().catch(function () {});
+}
+
+/**
+ * Възпроизвежда звук при взимане на пул
+ */
+function playCaptureSound() {
+  captureSound.currentTime = 0;
+  captureSound.play().catch(function () {});
+}
+
+/**
+ * Възпроизвежда звук при победа
+ */
+function playVictorySound() {
+  victorySound.currentTime = 0;
+  victorySound.play().catch(function () {});
+}
 
 // Създаване на групов обект за дъската
 boardGroup = group();
@@ -466,6 +502,13 @@ function movePiece(
   piece.row = targetRow;
   piece.col = targetCol;
 
+  // Възпроизвеждане на звук
+  if (isJump) {
+    playCaptureSound();
+  } else {
+    playMoveSound();
+  }
+
   // Премахване на прескочен пул
   if (isJump) {
     var capturedPiece = board[capturedRow][capturedCol];
@@ -538,8 +581,10 @@ function checkWinner() {
 
   if (blackPieces === 0 || !blackCanMove) {
     updateStatus("🏆 Белите печелят! 🏆");
+    playVictorySound();
   } else if (whitePieces === 0 || !whiteCanMove) {
     updateStatus("🏆 Черните печелят! 🏆");
+    playVictorySound();
   }
 }
 

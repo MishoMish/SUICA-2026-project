@@ -1,0 +1,84 @@
+EDUCATIONAL PROJECT LICENSE
+Version 1.0, January 2026
+
+Copyright (c) 2026 Михаил Доброславски (Mihail Dobroslavski)
+
+TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
+
+1. DEFINITIONS
+
+   "Project" refers to the checkers (шашки) interactive lesson, including all
+   source code, documentation, graphics, sounds, and other materials contained
+   in this repository.
+
+   "SIUKS Course" refers to the university course "Създаване на Интерактивно 
+   Учебно Компютърно Съдържание" (Creating Interactive Educational Computer 
+   Content) taught at the Faculty of Mathematics and Informatics, Sofia 
+   University "St. Kliment Ohridski".
+
+   "Educational Submission" means any work submitted for academic credit,
+   grading, or evaluation in the SIUKS Course or any substantially similar
+   course at any educational institution.
+
+2. GRANT OF LICENSE
+
+   Subject to the restrictions below, permission is hereby granted, free of
+   charge, to any person obtaining a copy of this Project, to:
+
+   a) Study, read, and learn from the source code and materials
+   b) Use the code as a reference for understanding SUICA library usage
+   c) Copy, modify, and adapt the logic and techniques for projects OUTSIDE
+      of university course submissions
+   d) Use in personal, commercial, or open-source projects unrelated to
+      academic coursework for the SIUKS Course
+
+3. RESTRICTIONS
+
+   THE FOLLOWING USES ARE EXPRESSLY PROHIBITED:
+
+   a) Submitting this Project, in whole or in part, as your own work for the
+      SIUKS Course or any similar academic course
+   b) Using this Project as a basis for an Educational Submission without
+      substantial original contribution
+   c) Copying significant portions of code for the purpose of academic fraud
+      or plagiarism
+   d) Claiming authorship of this Project or any substantial part thereof
+
+4. ACADEMIC INTEGRITY NOTICE
+
+   This Project is published for educational and reference purposes. If you
+   are a student in the SIUKS Course or a similar course:
+
+   - You MAY look at this code to understand concepts
+   - You MAY learn techniques and apply them in your OWN original work
+   - You MUST NOT copy code directly for your submission
+   - You MUST NOT submit this project or derivatives as your own work
+
+   Violations may constitute academic misconduct under your institution's
+   policies.
+
+5. ATTRIBUTION
+
+   If you use ideas, techniques, or code patterns from this Project in
+   non-academic contexts, attribution is appreciated but not required.
+
+6. NO WARRANTY
+
+   THE PROJECT IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+   FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+   FROM, OUT OF OR IN CONNECTION WITH THE PROJECT OR THE USE OR OTHER DEALINGS
+   IN THE PROJECT.
+
+7. CONTACT
+
+   For questions about this license or permitted uses, contact:
+   GitHub: https://github.com/MishoMish
+
+---
+
+This license is designed to encourage learning while preventing academic
+dishonesty. The author believes in open education and sharing knowledge,
+but also in the importance of original work in academic settings.
