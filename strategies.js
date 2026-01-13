@@ -248,6 +248,7 @@ function setupChainCapture() {
   // Създаване на специална позиция за демонстрация на верижно взимане
   // Бял пул на A3 (ред 5, колона 0)
   var whitePiece = createPiece(5, 0, true);
+  promoteToKing(whitePiece); // Правим го дама за демонстрацията
   pieces.push(whitePiece);
   board[5][0] = whitePiece;
 
