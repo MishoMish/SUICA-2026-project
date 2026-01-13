@@ -49,8 +49,9 @@ MyProject/
 ├── suica.js            # SUICA библиотека
 ├── tween.umd.js        # Анимационна библиотека
 ├── sounds/             # Звукови ефекти
-│   ├── move.wav
-│   └── place.mp3
+│   ├── capture.wav
+│   ├── place.mp3
+│   └── victory.mp3
 ├── images/             # Изображения
 └── README.md           # Този файл
 ```
