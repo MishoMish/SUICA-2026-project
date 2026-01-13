@@ -27,7 +27,7 @@ function executeAutoplayMove(
   isJump,
   capturedRow,
   capturedCol,
-  callback
+  callback,
 ) {
   // Намиране на пула
   var piece = board[fromRow][fromCol];
@@ -50,7 +50,7 @@ function executeAutoplayMove(
       if (!isJump) {
         currentPlayer = currentPlayer === "white" ? "black" : "white";
         updateStatus(
-          "Ход на " + (currentPlayer === "white" ? "белите" : "черните")
+          "Ход на " + (currentPlayer === "white" ? "белите" : "черните"),
         );
       }
       if (callback) callback();
@@ -104,7 +104,7 @@ function playAutoplaySequence(moves, index) {
       setTimeout(function () {
         playAutoplaySequence(moves, index + 1);
       }, 800);
-    }
+    },
   );
 }
 

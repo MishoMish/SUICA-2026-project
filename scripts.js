@@ -107,7 +107,7 @@ function createBoard() {
   var boardBase = cube(
     [0, -5, 0],
     [CELL_SIZE * BOARD_SIZE + 10, 8, CELL_SIZE * BOARD_SIZE + 10],
-    "#5d3a1a"
+    "#5d3a1a",
   );
   boardGroup.add(boardBase);
 
@@ -115,7 +115,7 @@ function createBoard() {
   var frame = cube(
     [0, -2, 0],
     [CELL_SIZE * BOARD_SIZE + 20, 4, CELL_SIZE * BOARD_SIZE + 20],
-    "#3d2914"
+    "#3d2914",
   );
   boardGroup.add(frame);
 
@@ -159,7 +159,7 @@ function createCoordinateLabels() {
     var labelFront = point(
       [x, 2, BOARD_OFFSET + BOARD_SIZE * (CELL_SIZE - 4) + 25],
       18,
-      "#ffffff"
+      "#ffffff",
     );
     var drawingF = drawing(64);
     fillText(0, 0, letters[col], "#ffffff", "bold 48px Arial");
@@ -192,7 +192,7 @@ function createCoordinateLabels() {
     var labelRight = point(
       [BOARD_OFFSET + BOARD_SIZE * (CELL_SIZE - 4) + 25, 2, z],
       18,
-      "#ffffff"
+      "#ffffff",
     );
     var drawingR = drawing(64);
     fillText(0, 0, String(BOARD_SIZE - row), "#ffffff", "bold 48px Arial");
@@ -233,7 +233,7 @@ function createPiece(row, col, isWhite) {
   var rim = cylinder(
     [0, 6, 0],
     [CELL_SIZE * 0.42, 1, CELL_SIZE * 0.42],
-    isWhite ? "#c9b896" : "#1a1410"
+    isWhite ? "#c9b896" : "#1a1410",
   );
   piece.add(rim);
 
@@ -263,7 +263,7 @@ function promoteToKing(piece) {
   var crown = cone(
     [0, 12, 0],
     [CELL_SIZE * 0.2, 6, CELL_SIZE * 0.2],
-    crownColor
+    crownColor,
   );
   piece.add(crown);
 
@@ -271,7 +271,7 @@ function promoteToKing(piece) {
   var crownRing = cylinder(
     [0, 10, 0],
     [CELL_SIZE * 0.25, 2, CELL_SIZE * 0.25],
-    crownColor
+    crownColor,
   );
   piece.add(crownRing);
 
@@ -422,7 +422,7 @@ function highlightValidMoves(piece) {
     var highlight = cylinder(
       [x, 1, z],
       [CELL_SIZE * 0.4, 2, CELL_SIZE * 0.4],
-      move.isJump ? "#ff6347" : HIGHLIGHT_COLOR
+      move.isJump ? "#ff6347" : HIGHLIGHT_COLOR,
     );
     highlight.row = move.row;
     highlight.col = move.col;
@@ -464,7 +464,7 @@ function movePiece(
   targetCol,
   isJump,
   capturedRow,
-  capturedCol
+  capturedCol,
 ) {
   // Обновяване на логическата дъска
   board[piece.row][piece.col] = null;
@@ -606,7 +606,7 @@ function onPointerDown(event) {
     event,
     pieces.filter(function (p) {
       return p.visible !== false;
-    })
+    }),
   );
   var clickedHighlight = findObject(event, highlightCells);
 
@@ -619,7 +619,7 @@ function onPointerDown(event) {
         clickedHighlight.col,
         clickedHighlight.isJump,
         clickedHighlight.capturedRow,
-        clickedHighlight.capturedCol
+        clickedHighlight.capturedCol,
       );
     }
   } else if (clickedPiece) {
@@ -639,7 +639,8 @@ function onPointerDown(event) {
         selectedPiece = clickedPiece;
         highlightValidMoves(clickedPiece);
         updateInfo(
-          "Избран пул на " + getPositionName(clickedPiece.row, clickedPiece.col)
+          "Избран пул на " +
+            getPositionName(clickedPiece.row, clickedPiece.col),
         );
       }
     } else {
