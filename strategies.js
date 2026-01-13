@@ -7,7 +7,6 @@ var isAutoplayActive = false;
 var autoplayMoves = [];
 var autoplayIndex = 0;
 
-// Нулиране на демонстрацията
 function resetDemo() {
   isAutoplayActive = false;
   autoplayMoves = [];

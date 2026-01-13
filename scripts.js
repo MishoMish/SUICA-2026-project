@@ -7,17 +7,16 @@
 // КОНСТАНТИ И НАСТРОЙКИ
 // =========================================================
 
-const BOARD_SIZE = 8; // Размер на дъската 8x8
-const CELL_SIZE = 30; // Размер на една клетка
-const BOARD_OFFSET = (-CELL_SIZE * (BOARD_SIZE - 1)) / 2; // Центриране на дъската
+const BOARD_SIZE = 8;
+const CELL_SIZE = 30;
+const BOARD_OFFSET = (-CELL_SIZE * (BOARD_SIZE - 1)) / 2;
 
-// Цветове
-const LIGHT_CELL = "#f0d9b5"; // Светла клетка
-const DARK_CELL = "#b58863"; // Тъмна клетка
-const WHITE_PIECE = "#fff8dc"; // Бял пул
-const BLACK_PIECE = "#2d1f14"; // Черен пул
-const HIGHLIGHT_COLOR = "#7fff00"; // Зелено за подсветка на възможни ходове
-const SELECTED_COLOR = "#ffd700"; // Златно за избран пул
+const LIGHT_CELL = "#f0d9b5";
+const DARK_CELL = "#b58863";
+const WHITE_PIECE = "#fff8dc";
+const BLACK_PIECE = "#2d1f14";
+const HIGHLIGHT_COLOR = "#7fff00";
+const SELECTED_COLOR = "#ffd700";
 
 // =========================================================
 // ГЛОБАЛНИ ПРОМЕНЛИВИ
@@ -48,7 +47,7 @@ var coordinateLabels = [];
 // ИНИЦИАЛИЗАЦИЯ НА SUICA
 // =========================================================
 
-// Настройка на камерата - прост изглед отгоре
+// Камера
 background("#2d3436");
 perspective(40);
 lookAt([0, 275, 250], [0, 0, 0], [0, 0, -1]);
@@ -172,11 +171,11 @@ function createPiece(row, col, isWhite) {
   // Основен пул - цилиндър
   var piece = group();
 
-  // Долна част на пула (стои на дъската - над клетките които са с височина 2)
+  // Долна част на пула
   var base = cylinder([0, 4, 0], [CELL_SIZE * 0.4, 6, CELL_SIZE * 0.4], color);
   piece.add(base);
 
-  // Горна част (малко по-тънка)
+  // Горна част
   var top = cylinder([0, 8, 0], [CELL_SIZE * 0.35, 3, CELL_SIZE * 0.35], color);
   piece.add(top);
 
@@ -188,7 +187,6 @@ function createPiece(row, col, isWhite) {
   );
   piece.add(rim);
 
-  // Позициониране - y=-3 за да лежат върху клетките (клетките са с височина 2, центрирани на y=0)
   piece.center = [x, -3, z];
   piece.row = row;
   piece.col = col;
@@ -423,7 +421,7 @@ function movePiece(
     .onComplete(function () {
       // Финално позициониране
       piece.x = targetX;
-      piece.y = -3; // Правилна y позиция за лежане върху дъската
+      piece.y = -3;
       piece.z = targetZ;
     })
     .start();
@@ -612,7 +610,6 @@ function updateStatus(text) {
 
 function updateInfo(text) {
   document.getElementById("info").innerHTML = text;
-  // Изчистване след 3 секунди
   setTimeout(function () {
     document.getElementById("info").innerHTML = "";
   }, 3000);
@@ -645,8 +642,8 @@ function toggleCoordinates() {
 function resetCamera() {
   var startH = rotationH;
   var startV = rotationV;
-  var targetH = 0; // Перфектен изглед отгоре
-  var targetV = 0; // Без хоризонтална ротация
+  var targetH = 0;
+  var targetV = 0;
 
   var animState = { progress: 0 };
   new TWEEN.Tween(animState)
