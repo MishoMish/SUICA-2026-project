@@ -38,6 +38,9 @@ var lastMouseX = 0;
 var lastMouseY = 0;
 var rotationH = 0; // Хоризонтална ротация (0 = перфектен изглед отгоре)
 var rotationV = 0; // Вертикална ротация (без начално завъртане)
+var zoomLevel = 1.0; // Ниво на приближаване (1.0 = нормално)
+var MIN_ZOOM = 0.5; // Минимално приближаване
+var MAX_ZOOM = 2.0; // Максимално приближаване
 
 // Групов обект за цялата дъска
 var boardGroup;
@@ -59,21 +62,60 @@ boardGroup = group();
 // СЪЗДАВАНЕ НА ДЪСКАТА
 // =========================================================
 
+/**
+ * Създава 3D шахматна дъска със SUICA
+ * Включва:
+ * - Дървена основа и рамка с текстура
+ * - 64 клетки (8x8) в шахматен ред
+ * - Координатни етикети (A-H, 1-8)
+ */
 function createBoard() {
-  // Основа на дъската
+  // Създаване на дървена текстура за рамката
+  var woodTexture = drawing(128, 128);
+  woodTexture.fillStyle = "#5d3a1a";
+  woodTexture.fillRect(0, 0, 128, 128);
+  // Добавяне на шарки за дърво
+  woodTexture.strokeStyle = "#4a2d15";
+  woodTexture.lineWidth = 2;
+  for (var i = 0; i < 20; i++) {
+    woodTexture.beginPath();
+    woodTexture.moveTo(0, i * 7 + Math.random() * 3);
+    woodTexture.bezierCurveTo(
+      32, i * 7 + Math.random() * 5,
+      96, i * 7 + Math.random() * 5,
+      128, i * 7 + Math.random() * 3
+    );
+    woodTexture.stroke();
+  }
+
+  // Основа на дъската с текстура
   var boardBase = cube(
     [0, -5, 0],
     [CELL_SIZE * BOARD_SIZE + 10, 8, CELL_SIZE * BOARD_SIZE + 10],
     "#5d3a1a"
   );
+  boardBase.image = woodTexture;
   boardGroup.add(boardBase);
 
-  // Рамка около дъската
+  // Рамка около дъската с текстура
+  var frameTexture = drawing(128, 128);
+  frameTexture.fillStyle = "#3d2914";
+  frameTexture.fillRect(0, 0, 128, 128);
+  frameTexture.strokeStyle = "#2d1f0f";
+  frameTexture.lineWidth = 1;
+  for (var j = 0; j < 25; j++) {
+    frameTexture.beginPath();
+    frameTexture.moveTo(0, j * 5 + Math.random() * 2);
+    frameTexture.lineTo(128, j * 5 + Math.random() * 2);
+    frameTexture.stroke();
+  }
+
   var frame = cube(
     [0, -2, 0],
     [CELL_SIZE * BOARD_SIZE + 20, 4, CELL_SIZE * BOARD_SIZE + 20],
     "#3d2914"
   );
+  frame.image = frameTexture;
   boardGroup.add(frame);
 
   // Създаване на клетките
@@ -163,6 +205,13 @@ function createCoordinateLabels() {
 // СЪЗДАВАНЕ НА ПУЛОВЕ
 // =========================================================
 
+/**
+ * Създава 3D пул за игра на шашки
+ * @param {number} row - Ред на дъската (0-7)
+ * @param {number} col - Колона на дъската (0-7)
+ * @param {boolean} isWhite - Дали пулът е бял
+ * @returns {Object} SUICA група съдържаща пула
+ */
 function createPiece(row, col, isWhite) {
   var x = BOARD_OFFSET + col * CELL_SIZE;
   var z = BOARD_OFFSET + row * CELL_SIZE;
@@ -198,7 +247,11 @@ function createPiece(row, col, isWhite) {
   return piece;
 }
 
-// Превръщане на пул в дама
+/**
+ * Превръща обикновен пул в дама (King)
+ * Добавя визуална коронка и позволява движение назад
+ * @param {Object} piece - Пулът за превръщане
+ */
 function promoteToKing(piece) {
   if (piece.isKing) return;
 
@@ -278,6 +331,13 @@ function initGame() {
 // ЛОГИКА ЗА ВЪЗМОЖНИ ХОДОВЕ
 // =========================================================
 
+/**
+ * Изчислява всички валидни ходове за даден пул
+ * Проверява за обикновени ходове и скокове (взимане)
+ * При наличие на скокове, връща САМО тях (задължително взимане)
+ * @param {Object} piece - Пулът за проверка
+ * @returns {Array} Масив от възможни ходове
+ */
 function getValidMoves(piece) {
   var moves = [];
   var jumps = [];
@@ -386,6 +446,17 @@ function clearHighlights() {
 // ДВИЖЕНИЕ НА ПУЛ
 // =========================================================
 
+/**
+ * Премества пул на нова позиция с анимация
+ * Обработва взимане на противникови пулове и верижни скокове
+ * Проверява за превръщане в дама и смяна на играч
+ * @param {Object} piece - Пулът за преместване
+ * @param {number} targetRow - Целеви ред
+ * @param {number} targetCol - Целева колона
+ * @param {boolean} isJump - Дали е скок (взимане)
+ * @param {number} capturedRow - Ред на взетия пул
+ * @param {number} capturedCol - Колона на взетия пул
+ */
 function movePiece(
   piece,
   targetRow,
@@ -596,6 +667,44 @@ function onPointerUp(event) {
 }
 
 // =========================================================
+// ОБРАБОТКА НА КОЛЕЛОТО НА МИШКАТА (ZOOM)
+// =========================================================
+
+/**
+ * Обработва zoom с колелцето на мишката
+ * @param {WheelEvent} event - Събитие от колелото
+ */
+function onMouseWheel(event) {
+  // Предотвратяване на скролиране на страницата
+  event.preventDefault();
+
+  // Определяне на посоката на zoom
+  var delta = event.deltaY > 0 ? -0.1 : 0.1;
+  zoomLevel = clamp(zoomLevel + delta, MIN_ZOOM, MAX_ZOOM);
+
+  // Прилагане на zoom чрез мащабиране на групата
+  boardGroup.size = zoomLevel;
+
+  updateInfo("Zoom: " + Math.round(zoomLevel * 100) + "%");
+}
+
+/**
+ * Нулира нивото на zoom към стандартното
+ */
+function resetZoom() {
+  var startZoom = zoomLevel;
+  var animState = { progress: 0 };
+  new TWEEN.Tween(animState)
+    .to({ progress: 1 }, 300)
+    .easing(TWEEN.Easing.Quadratic.Out)
+    .onUpdate(function () {
+      zoomLevel = startZoom + (1.0 - startZoom) * animState.progress;
+      boardGroup.size = zoomLevel;
+    })
+    .start();
+}
+
+// =========================================================
 // ПОМОЩНИ ФУНКЦИИ
 // =========================================================
 
@@ -638,12 +747,17 @@ function toggleCoordinates() {
   }
 }
 
-// Плавно връщане на камерата към изглед отгоре
+/**
+ * Плавно връща камерата към изглед отгоре и нулира zoom
+ * Използва TWEEN анимация за плавен преход
+ */
 function resetCamera() {
   var startH = rotationH;
   var startV = rotationV;
+  var startZoom = zoomLevel;
   var targetH = 0;
   var targetV = 0;
+  var targetZoom = 1.0;
 
   var animState = { progress: 0 };
   new TWEEN.Tween(animState)
@@ -652,7 +766,9 @@ function resetCamera() {
     .onUpdate(function () {
       rotationH = startH + (targetH - startH) * animState.progress;
       rotationV = startV + (targetV - startV) * animState.progress;
+      zoomLevel = startZoom + (targetZoom - startZoom) * animState.progress;
       boardGroup.spin = [rotationH, rotationV, 0];
+      boardGroup.size = zoomLevel;
     })
     .start();
 }
